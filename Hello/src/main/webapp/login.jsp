@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h3>User ID: <%= request.getParmeter("id") %></h3>
+<h3>User ID: <%= request.getParameter("id") %></h3>
 </body>
 </html>
