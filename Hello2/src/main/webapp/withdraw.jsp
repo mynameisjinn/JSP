@@ -4,7 +4,7 @@
 	request.setCharacterEncoding("utf-8");
 	
 	String uid = request.getParameter("id");
-	String sql = "DELETE FROM user WHERE uid =?";
+	String sql = "DELETE FROM user WHERE uid = ?";
 	
 	Class.forName("com.mysql.jdbc.Driver");
 	Connection conn = DriverManager.getConnection(
