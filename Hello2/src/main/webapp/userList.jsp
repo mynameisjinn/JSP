@@ -1,9 +1,11 @@
 <%@ page contentType="text/html" pageEncoding="utf-8" %>
 <%@ page import="java.sql.*" %>
 <%
-	Class.forName("com.mysql.jdbc.Driver");
-	Connection conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/mysns", "root","1111");
+	//Class.forName("com.mysql.jdbc.Driver");
+	//Connection conn = DriverManager.getConnection(
+		//			"jdbc:mysql://localhost:3306/mysns", "root","1111");
+	
+	Connection conn = ConnectionPool.get();
 	Statement stmt = conn.createStatement();
 	ResultSet rs = stmt.executeQuery("SELECT id, name FROM user");
 	
