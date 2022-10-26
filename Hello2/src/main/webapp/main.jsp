@@ -1,6 +1,7 @@
 <%@ page contentType="text/html" pageEncoding="utf-8" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="util.*" %>
+
 <%
 	String sql = "SELECT * FROM feed ORDER BY ts DESC";
 	
