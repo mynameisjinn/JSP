@@ -66,4 +66,28 @@ public class UserDAO {
 				if (conn != null) conn.close(); 
 			}
 		}
+		public int login(String uid, String upass) throws NamingException,
+	SQLException {
+			Connection conn = null;
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try {
+				String sql = "SELECT id, password FROM user WHERE id = ?";
+				
+				conn = ConnectionPool.get();
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, uid);
+				
+				rs = stmt.executeQuery();
+				if (!rs.next()) return 1;
+				if (!upass.equals(rs.getString("password"))) return 2;
+				
+				return 0;
+			}
+			finally {
+				if (rs != null) rs.close();
+				if (stmt != null) stmt.close();
+				if (conn != null) conn.close();
+			}
+		}
 }
