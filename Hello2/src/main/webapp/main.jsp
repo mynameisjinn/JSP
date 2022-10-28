@@ -1,14 +1,11 @@
 <%@ page contentType="text/html" pageEncoding="utf-8" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="util.*" %>
+<%@ page import="dao.FeedDAO" %>
 
 <%
-	String sql = "SELECT * FROM feed ORDER BY ts DESC";
-	
-	Connection conn = ConnectionPool.get();
-	PreparedStatement stmt = conn.prepareStatement(sql);
-	ResultSet rs = stmt.executeQuery();
-	
+	ResultSet rs = (new FeedDAO()).getList();
+		
 	String str = "<table align = center>";
 	str += "<tr><th colspan=2>작성글 리스트</th></tr>";
 	while(rs.next()){
@@ -22,4 +19,5 @@
 	str += "</table>";
 	out.print(str);
 	
-	rs.close(); stmt.close(); conn.close();
+	rs.close(); 
+%>

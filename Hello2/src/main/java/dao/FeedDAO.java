@@ -26,5 +26,19 @@ public class FeedDAO {
 			if (conn != null) conn.close();
 		}
 	}
+	public ResultSet getList() throws NamingException, SQLException {
+		Connection conn = null;
+		PreparedStatement stmt = null ;
+		try {
+			String sql = "SELECT * FROM feed ORDER BY ts DESC";
+			conn = ConnectionPool.get();
+			stmt = conn.prepareStatement(sql);
+			return stmt.executeQuery();
+		}
+		finally {
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+		}
+	}
 
 }
