@@ -18,4 +18,5 @@
 		session.setAttribute("id",uid);
 		response.sendRedirect("main.jsp");
 	}
+%>
 		

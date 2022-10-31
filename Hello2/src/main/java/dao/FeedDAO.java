@@ -8,17 +8,18 @@ import util.ConnectionPool;
 
 public class FeedDAO {
 	
-	public boolean insert(String uid, String ucon) throws
+	public boolean insert(String uid, String ucon, String uimage) throws
 	NamingException, SQLException {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		try {
-			String sql = "INSERT INTO feed(id, content) VALUES(?,?)";
+			String sql = "INSERT INTO feed(id, content,images VALUES(?,?,?)";
 			
 			conn = ConnectionPool.get();
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, uid);
 			stmt.setString(2, ucon);
+			stmt.setString(3, uimage);
 			
 			int count = stmt.executeUpdate();
 			return (count > 0) ? true : false;
