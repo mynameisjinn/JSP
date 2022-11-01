@@ -5,9 +5,10 @@
 	
 	String uid = request.getParameter("id");
 	String ucon = request.getParameter("content");
-	
+    String uimages = request.getParameter("images");
+
 	FeedDAO dao = new FeedDAO();
-	if(dao.insert(uid,ucon)){
+	if(dao.insert(uid,ucon,uimages)){
 		out.print("작성하신 글이 업로드되었습니다.");
 	}
 	else{
