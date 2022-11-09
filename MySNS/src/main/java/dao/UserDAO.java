@@ -1,6 +1,8 @@
 package dao;
 
 import java.sql.*;
+import java.util.ArrayList;
+
 import javax.naming.NamingException;
 import util.ConnectionPool;
 
@@ -52,7 +54,7 @@ public class UserDAO {
 			Connection conn = null;
 			PreparedStatement stmt = null;
 			try {
-				String sql = "DELETE FROM uesr WHERE id = ?";
+				String sql = "DELETE FROM user WHERE id = ?";
 				
 				conn = ConnectionPool.get();
 				stmt = conn.prepareStatement(sql);
@@ -90,4 +92,27 @@ public class UserDAO {
 				if (conn != null) conn.close();
 			}
 		}
+		public ArrayList<UserObj> getList() throws NamingException, SQLException {
+	        Connection conn = null;
+	        PreparedStatement stmt = null;
+	        ResultSet rs = null;
+	        try {
+	            String sql = "SELECT id, name, ts FROM user ORDER BY ts DESC";
+	            
+	            conn = ConnectionPool.get();
+	            stmt = conn.prepareStatement(sql);
+	            rs = stmt.executeQuery();
+	            
+	            ArrayList<UserObj> users = new ArrayList<UserObj>();
+	            while(rs.next()) {
+	            	users.add(new UserObj(rs.getString("id"), rs.getString("name"), rs.getString("ts")));
+	            }
+	            return users;
+	            
+	        } finally {
+	            if (rs != null) rs.close(); 
+	            if (stmt != null) stmt.close(); 
+	            if (conn != null) conn.close();
+	        }
+	    }
 }
