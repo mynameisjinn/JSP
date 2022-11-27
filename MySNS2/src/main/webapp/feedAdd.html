@@ -35,18 +35,60 @@ input[type=file]{
 </style>
 </head>
 <body>
-<form action="jsp/feedAdd.jsp" method="post" enctype="multipart/form-data">
 	<div class="page-hdr">MySNS</div>
 	<div class="section pad-24 mtop-30">
-		<input name="id" type="text" placeholder="아이디 (이메일주소)">
-		<textarea name="content" class="mtop-10" 
+		<input id="id" type="text" placeholder="아이디 (이메일주소)">
+		<textarea id="content" class="mtop-10" 
 		placeholder="이곳에 글을 작성해 주세요."></textarea>
 		<div class="section pad-4 mtop-30">
 			<div class="desc">아래에서 이미지를 선택해주세요.</div>
-			<input type="submit" class="mtop-30" value="업로드하기">
+			<input type="file" id="image">
 		</div>
+	    <input type="submit" class="mtop-30" value="업로드하기"
+	    									onclik="upload()">
 	</div>
 	<div class="page-footer">Copyright: mysns.com, 2022</div>
-</form>
 </body>
 </html>
+
+<script src="js/jquery-3.6.1.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+$(document).ready(function(){
+	Page.init(start);
+});
+
+function start(uid) {
+	
+}
+
+function upload() {
+	var id = $("#id").val().trim();
+	if(id == ""){
+		alert("아이디를 입력해주세요.");
+		$("#id").focus();
+		return;
+	}
+	var content = $("#content").val().trim();
+	if (content == ""){
+		alert("작성글을 입력해 주세요.");
+		$("#content").focus();
+		return;
+	}
+	var imgobj = $("#image")[0].files[0];	
+	var params = new FormData();
+	params.append("id",id);
+	params.append("content",content);	
+	if (imgobj != null) {
+		params.append("image",imgobj);
+	}
+	var url = "jsp.feedAdd.jsp";
+	AJAX.call(url, params, function(data) {
+		var code = data.trim();
+		if(code == "ER"){
+			alert("작성 글의 업로드 중 오류가 발생하였습니다.");
+			window.location.href = "main.html";
+		}
+	},true);
+}
+</script>
