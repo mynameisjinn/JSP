@@ -45,7 +45,7 @@ input[type=file]{
 			<input type="file" id="image">
 		</div>
 	    <input type="submit" class="mtop-30" value="업로드하기"
-	    									onclik="upload()">
+	    									onclick="upload()">
 	</div>
 	<div class="page-footer">Copyright: mysns.com, 2022</div>
 </body>
@@ -58,9 +58,7 @@ $(document).ready(function(){
 	Page.init(start);
 });
 
-function start(uid) {
-	
-}
+function start(uid) {}
 
 function upload() {
 	var id = $("#id").val().trim();
@@ -75,10 +73,17 @@ function upload() {
 		$("#content").focus();
 		return;
 	}
-	var imgobj = $("#image")[0].files[0];	
+	var imgobj = $("#image")[0].files[0];
+	
+	var jsonobj = {id:id, content: content, ts: getTime()};
+	if(imgobj != null){
+		jsonobj.images = [imgobj.name];
+	}
+	
 	var params = new FormData();
-	params.append("id",id);
-	params.append("content",content);	
+	//params.append("id",id);
+	//params.append("content",content);	
+	params.append("jsonstr", JSON.stringify(jsonobj));
 	if (imgobj != null) {
 		params.append("image",imgobj);
 	}
@@ -90,5 +95,19 @@ function upload() {
 			window.location.href = "main.html";
 		}
 	},true);
+}
+
+function getTime(){
+	var date = new Date();
+	var year = date.getFullYear();
+	var month = ("0" + (1+date.getMonth())).slice(-2);
+	var day = ("0" + date.getDate()).slice(-2);
+	
+	var hour = ("0" + date.getHours()).slice(-2);
+	var min = ("0" + date.getMinutes()).slice(-2);
+	var sec = ("0" + date.getSeconds()).slice(-2);
+	
+	return year + "-" + month + "-" + day + " " +hour
+				+ ":" + min + ":" + sec;
 }
 </script>
